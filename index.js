@@ -4,14 +4,7 @@
 // событий, во время технического обслуживания и т. д.
 
 // Плагин это класс CountdownTimer, экземпляр которого создает новый таймер с настройками.
-refs = {
-  secondsText: document.querySelector('.seconds'),
-  minutesText: document.querySelector('.minutes'),
-  hoursText: document.querySelector('.hours'),
-  daysText: document.querySelector('.days'),
-  timer: document.querySelector('.timer')
 
-}
 
 // const clock = {
 
@@ -89,73 +82,50 @@ refs = {
 //   refs.secondsText = `${secs}` ;
 // }
 
-const time = CountdownTimer.targetDate - Date.now( );
+refs = {
+  inputDate: document.querySelector('.input'),
+  secondsText: document.querySelector('.seconds'),
+  minutesText: document.querySelector('.minutes'),
+  hoursText: document.querySelector('.hours'),
+  daysText: document.querySelector('.days'),
+}
 
-new CountdownTimer({
+class CountDownTimer {
+  consrtuctor(selector, targetDate){
+      selector: this.selector;
+      targetDate: this.targetDate;
+  }
+
+  timer(){
+  
+  const futureTime = new Date("Sep 5, 2022").getTime(); //время на момент вызова функции
+  
+      setInterval(() => {
+      const currentTime = new Date().getTime();    
+      const deltaTime = futureTime - currentTime;    
+      // console.log(deltaTime)
+      let days = Math.floor(deltaTime / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((deltaTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let mins = Math.floor((deltaTime % (1000 * 60 * 60)) / (1000 * 60));
+      let secs = Math.floor((deltaTime % (1000 * 60)) / 1000);
+
+      refs.daysText.textContent = days  < 10 ? `0${days}` : days; 
+      refs.hoursText.textContent = hours  < 10 ? `0${hours}` : hours; 
+      refs.minutesText.textContent = mins  < 10 ? `0${mins}` : mins;
+      refs.secondsText.textContent = secs  < 10 ? `0${secs}` : secs;     
+          
+      
+      return `${days}:${hours}:${mins}:${secs}`;
+      
+      }, 1000)
+  }
+}
+
+
+const countdown = new CountDownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 17, 2019'),
-});
-
-const timer = {
-  
-
-   start (){
-    const startTime = Date.now( );
-    // const secText = Number(refs.secondsText.textContent);
-
-  setInterval(() =>{
-   const currentTime = Date.now();
-   const time = this.targetDate - currentTime;
-
-
-   const deltaTime = currentTime - startTime;
-   const  {days, hours, mins, secs} = getTimeComponents(deltaTime);
-          // {days, hours, mins, secs}
-   updateClockface({days, hours, mins, secs})
-   console.log(`${days}:${hours}:${mins}:${secs}`)
-  
-    }, 1000)
-  }
-   }
-
-
-
-
-
-
-
-
-
-
-console.log(Number(refs.secondsText.textContent))
-// method
-function timerMethod(){
-  result = Math.floor((new Date() - startTime) / 1000);  
-  let seconds = result % 60;
-  let minutes = Math.floor(result / 60);
-  let hours = Math.floor(minutes / 60);
-  let days = Math.floor(hours / 60);
-
-  refs.secondsText.textContent = seconds  < 10 ? `0${seconds}` : seconds;  
-  refs.minutesText.textContent = minutes  < 10 ? `0${minutes}` : minutes;  
-  refs.hoursText.textContent = hours  < 10 ? `0${hours}` : hours;  
-  refs.daysText.textContent = days  < 10 ? `0${days}` : days;  
+  targetDate: refs.daysText.value,
 }
-// let watchId = null;
-let startTime = null;
-let result= null; 
-console.log(new Date)
-
-const timer ={
-  start(){
-   startTime = new Date();
-
-  watchId = setInterval(timerMethod, 1000)
-  }
-}
-
-timer.start()
-
-
-
+)
+countdown.timer();
 

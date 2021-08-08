@@ -17,8 +17,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100px;
-    height: 150px;
+    width: 120px;
+    height: 180px;
     background-color: black;
     border-radius: 11px;
     margin-left: 15px;
@@ -27,7 +27,7 @@ body {
 .value,
 .label{
     color:coral;
-    font-size: 26px;
+    font-size: 29px;
 }
 .value{
     margin-top: 35px;
